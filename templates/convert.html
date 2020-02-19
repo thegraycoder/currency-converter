@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>
+            Currency converter
+        </title>
+    </head>
+    <script>
+        let base_curr = "{{ base }}";
+        let query_curr = "{{ query }}";
+        let amount = "{{ amount }}";
+        function set_base(selectedObject) {
+            base_curr = selectedObject.value;
+        };
+        function set_query(selectedObject) {
+            query_curr = selectedObject.value;
+        };
+        function set_amount(selectedObject) {
+            console.log(selectedObject.value);
+            amount = selectedObject.value
+        };
+        function redirect_now() {
+            window.location.href = '/currency/convert?base='+ base_curr + '&query='+ query_curr + '&amount='+ amount
+        };
+    </script>
+    <label>
+        <input type="text" class="input_inr" placeholder="Enter amount" value="{{ amount }}" onchange="set_amount(this)">
+    </label>
+    <label>
+        <select class="currList" onchange="set_base(this)">
+            {% for i in currency_options %}
+                {% if i == base %}
+                    <option value="{{ i }}" selected="selected">{{ i }}</option>
+                {% else %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </label>
+    <br>
+    <label>
+        <input type="text" class="input_inr" placeholder="Converted amount" value="{{ result }}">
+    </label>
+    <label>
+        <select class="currList" onchange="set_query(this)">
+            {% for i in currency_options %}
+                {% if i == query %}
+                    <option value="" selected="selected">{{ i }}</option>
+                {% else %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </label>
+    <br>
+    <button onclick="redirect_now()">Convert</button>
+
+</html>
